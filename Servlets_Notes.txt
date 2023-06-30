@@ -1,0 +1,42 @@
+-> Request <-> Response model	chrome/firefox   -----------> Request -------------> Server  ----------------->jdbc ------> DB (mysql) 
+		(Client)			    Java Program(Servlet)
+		|						|
+		<-----------------------------response<---------(html)
+						
+->
+
+                                     |---implements--->Servet(interface which has 5 methods - service,init,destroy,getServletConfig,getServletInfo)
+                                     |
+UserDefined Servlet -----------------|---extends------>GenericServlet(4 methods body is there except service method)
+                                     |
+                                     |---extends------>HttpServlet(service method body is also there with methods such as doPost(), doGet() etc..
+
+(note:these methods throws ServletException, IOException)
+
+-> if client/browser hits "/" index.jsp or index.html is the default response from server. It can be edited in web.xml in 
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>    ---> here we can edit as home.html or home.jsp etc.
+	</welcome-file-list>
+
+-> RequestDispatcher rd = req.RequestDispatcher("servlet2");
+   rd.include(req, resp) ---> include() method can include the response of any other servlet into your current servlet
+   rd.forward(req, resp) ---> forward() method can forward the response of current servlet to the next servlet specified in requestDispatcher
+
+-> Parameters- Parameters are the values which we get from users/client/browser(user --> servlet).
+   Ex- String name = request.getParameter("name");
+   
+-> Attributes - these are objects that are set by one servlet to object(session, request, config, context) and other servlet can fetch the object to process the logic.
+  Ex-setAttribute(String name, String value), Object value = getAttribute(String name), removeAttribute(String name)
+
+-> Session Tracking / StateManagement - Server considers every request as a new request. To be able to establish realation between previous requests, session tracking is needed.
+   For example -> server should remeber the login of the user, stores user_id, email etc. Methods used in session tracking:
+   
+-Cookies - In this method you can add cookie in response and send it to client side, then when another request is recieved by server, it can fetch cookie and authenticate it and identify 	      the previous request. It is set in key value pair in Cookie object.
+	      Cookie c = new Cookie("key", "value"); response.addCookie(c);
+	      Cookie[] cookies = request.getCookies();
+
+   -Hidden form fields -String name = req.getParameter("name"); 
+			<input type='hidden' name='user' value='"+name+"'/>
+   -URL Rewritting - <a href='servlet2?user="+name+"'>Click here to go to second servlet<a/>
+   
+-HttpSession
