@@ -35,6 +35,8 @@ UserDefined Servlet -----------------|---extends------>GenericServlet(4 methods 
 	      Cookie c = new Cookie("key", "value"); response.addCookie(c);
 	      Cookie[] cookies = request.getCookies();
 
-   -Hidden form fields
-   -URL Rewritting
-   -HttpSession
+   -Hidden form fields -String name = req.getParameter("name"); 
+			<input type='hidden' name='user' value='"+name+"'/>
+   -URL Rewritting - <a href='servlet2?user="+name+"'>Click here to go to second servlet<a/>
+   
+-HttpSession
